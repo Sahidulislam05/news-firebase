@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [error, setError] = useState("");
 
-  const { logInUser } = use(AuthContext);
+  const { logInUser, ForgetPassword } = use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const emailRef = useRef(null);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -32,6 +34,16 @@ const Login = () => {
         // toast(error.message);
       });
   };
+  const handleForgetPassword = () => {
+    const email = emailRef.current.value;
+    ForgetPassword(email)
+      .then(() => {
+        toast.success("Password reset email sent!");
+      })
+      .catch((error) => {
+        toast.error(error.code);
+      });
+  };
   return (
     <div className="flex justify-center min-h-screen items-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl py-5">
@@ -45,9 +57,9 @@ const Login = () => {
             <input
               type="email"
               name="email"
+              ref={emailRef}
               className="input"
               placeholder="Email"
-              required
             />
             {/* Password */}
             <label className="label">Password</label>
@@ -56,10 +68,15 @@ const Login = () => {
               name="password"
               className="input"
               placeholder="Password"
-              required
             />
             <div>
-              <a className="link link-hover">Forgot password?</a>
+              <button
+                type="button"
+                onClick={handleForgetPassword}
+                className="underline text-red-500 font-semibold text-xs"
+              >
+                Forgot password?
+              </button>
             </div>
             {error && <p className="text-red-500 text-xs"> {error} </p>}
             <button className="btn btn-neutral my-4">Login</button>

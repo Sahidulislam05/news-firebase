@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const SocialLogin = () => {
   const { googlelogin, githublogin } = use(AuthContext);
+
   const handleGoogleLogin = (e) => {
     e.preventDefault();
     googlelogin()

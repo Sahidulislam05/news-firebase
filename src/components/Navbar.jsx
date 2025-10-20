@@ -26,8 +26,9 @@ const Navbar = () => {
       </div>
       <div className="login-btn flex gap-5">
         <img
+          referrerPolicy="no-referrer"
           className="w-10 rounded-full"
-          src={`${user ? user.image_url : userIcon}`}
+          src={`${user ? user.photoURL : userIcon}`}
           alt=""
         />
         {user ? (

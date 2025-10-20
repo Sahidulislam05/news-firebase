@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -56,6 +57,9 @@ const AuthProvider = ({ children }) => {
   const googlelogin = () => {
     return signInWithPopup(auth, googleProvider);
   };
+  const ForgetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
   const emailVerification = () => {
     return sendEmailVerification(auth.currentUser);
   };
@@ -72,6 +76,7 @@ const AuthProvider = ({ children }) => {
     googlelogin,
     githublogin,
     emailVerification,
+    ForgetPassword,
   };
 
   return <AuthContext value={authData}>{children}</AuthContext>;

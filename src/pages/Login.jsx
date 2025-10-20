@@ -19,6 +19,10 @@ const Login = () => {
     // console.log()
     logInUser(email, password)
       .then((res) => {
+        if (!res.user?.emailVerified) {
+          toast.error("Email not verified");
+          return;
+        }
         console.log(res.user);
         toast.success("Login-Successful");
         navigate(`${location.state ? location.state : "/"}`);

@@ -4,7 +4,8 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const { createUser, SetUser, updateUser } = use(AuthContext);
+  const { createUser, SetUser, updateUser, emailVerification } =
+    use(AuthContext);
 
   const navigate = useNavigate();
   const [nameError, setNameError] = useState("");
@@ -29,13 +30,15 @@ const Register = () => {
         updateUser({ displayName: name, photoURL: photo })
           .then(() => {
             SetUser({ ...user, displayName: name, photoURL: photo });
-            navigate("/");
+            emailVerification().then(() => {
+              toast.success("Registration-Successful! Check your email");
+            });
+            navigate("/auth/login");
           })
           .catch((error) => {
             toast(error.message);
             SetUser(user);
           });
-        toast.success("Registration-Successful");
       })
       .catch((error) => {
         const errorMessage = error.message;

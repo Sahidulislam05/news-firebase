@@ -1,4 +1,4 @@
-import React from "react";
+
 import SocialLogin from "./SocialLogin";
 import FindUs from "./FindUs";
 import QZone from "./QZone";

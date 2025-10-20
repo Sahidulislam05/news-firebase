@@ -53,7 +53,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/*",
-    element: <h2>Error404</h2>,
+    element: (
+      <h2 className="min-h-screen flex justify-center items-center text-8xl font-semibold text-red-500 animate-pulse">
+        Error 404!
+      </h2>
+    ),
   },
 ]);
 

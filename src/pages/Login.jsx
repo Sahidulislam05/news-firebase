@@ -1,12 +1,15 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  const [error, setError] = useState("");
+
   const { logInUser } = use(AuthContext);
-  const location = useLocation();
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -16,11 +19,13 @@ const Login = () => {
     // console.log()
     logInUser(email, password)
       .then((res) => {
-        console.log(res);
+        console.log(res.user);
         toast.success("Login-Successful");
+        navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((error) => {
-        toast(error.message);
+        setError(error.code);
+        // toast(error.message);
       });
   };
   return (
@@ -38,6 +43,7 @@ const Login = () => {
               name="email"
               className="input"
               placeholder="Email"
+              required
             />
             {/* Password */}
             <label className="label">Password</label>
@@ -46,10 +52,12 @@ const Login = () => {
               name="password"
               className="input"
               placeholder="Password"
+              required
             />
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
+            {error && <p className="text-red-500 text-xs"> {error} </p>}
             <button className="btn btn-neutral my-4">Login</button>
             <h1 className="text-center">
               Dont’t Have An Account ?{" "}

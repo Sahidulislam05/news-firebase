@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 
 const DetailsCard = ({ news }) => {
-  console.log(news);
+  // console.log(news);
   return (
     <div className="space-y-5">
       <img
